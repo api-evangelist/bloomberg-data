@@ -1,0 +1,67 @@
+name: Bloomberg Data API
+description: Bloomberg provides financial, software, data, and media services. Their APIs offer access to real-time and historical market data, analytics, and financial information.
+url: https://www.bloomberg.com
+created: '2024'
+modified: '2024'
+apis:
+- name: Bloomberg Data License API
+  description: Provides access to Bloomberg's extensive financial data including real-time quotes, historical data, reference data, and analytics
+  image: https://www.bloomberg.com/company/brand/bloomberg-logo.png
+  humanURL: https://www.bloomberg.com/professional/support/api-library/
+  baseURL: https://api.bloomberg.com
+  tags:
+  - Financial Data
+  - Market Data
+  - Real-time
+  - Historical Data
+  - Analytics
+  properties:
+  - type: Documentation
+    url: https://www.bloomberg.com/professional/support/api-library/
+  - type: Authentication
+    url: https://www.bloomberg.com/professional/support/api-library/
+  contact:
+  - FN: Bloomberg API Support
+    email: dlsupport@bloomberg.net
+- name: Bloomberg Terminal Connect API
+  description: Enables applications to connect to Bloomberg Terminal and access market data, news, and analytics programmatically
+  image: https://www.bloomberg.com/company/brand/bloomberg-logo.png
+  humanURL: https://www.bloomberg.com/professional/support/api-library/
+  baseURL: https://terminal.bloomberg.com
+  tags:
+  - Terminal
+  - Desktop API
+  - Market Data
+  - News
+  - Real-time
+  properties:
+  - type: Documentation
+    url: https://www.bloomberg.com/professional/support/api-library/
+  - type: SDK
+    url: https://www.bloomberg.com/professional/support/api-library/
+- name: Bloomberg B-PIPE API
+  description: Real-time streaming market data API delivering quotes, trades, and market depth
+  image: https://www.bloomberg.com/company/brand/bloomberg-logo.png
+  humanURL: https://www.bloomberg.com/professional/product/bloomberg-pipe/
+  baseURL: https://bpipe.bloomberg.com
+  tags:
+  - Streaming
+  - Real-time
+  - Market Data
+  - Quotes
+  - Trades
+  properties:
+  - type: Documentation
+    url: https://www.bloomberg.com/professional/support/api-library/
+  - type: Pricing
+    url: https://www.bloomberg.com/professional/product/bloomberg-pipe/
+maintainers:
+- FN: Bloomberg API Team
+  email: apisupport@bloomberg.net
+tags:
+- Financial Services
+- Market Data
+- Real-time Data
+- Analytics
+- News
+- Trading
