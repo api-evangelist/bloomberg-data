@@ -1,5 +1,5 @@
 aid: bloomberg-data
-name: Bloomberg Data API
+name: Bloomberg Data
 description: >-
   Bloomberg provides financial, software, data, and media services. Their APIs
   offer access to real-time and historical market data, analytics, and financial
