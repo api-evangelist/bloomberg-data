@@ -7,11 +7,11 @@ description: >-
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
+  - Analytics
   - Financial Services
   - Market Data
-  - Real-time Data
-  - Analytics
   - News
+  - Real-Time Data
   - Trading
 url: >-
   https://raw.githubusercontent.com/api-evangelist/bloomberg-data/refs/heads/main/apis.yml
@@ -26,11 +26,11 @@ apis:
       real-time quotes, historical data, reference data, and analytics.
     humanURL: https://www.bloomberg.com/professional/support/api-library/
     tags:
-      - Financial Data
-      - Market Data
-      - Real-time
-      - Historical Data
       - Analytics
+      - Financial Data
+      - Historical Data
+      - Market Data
+      - Real-Time
     properties:
       - type: Documentation
         url: https://www.bloomberg.com/professional/support/api-library/
@@ -41,10 +41,10 @@ apis:
       market depth.
     humanURL: https://www.bloomberg.com/professional/products/data/enterprise-catalog/real-time-data-feed/
     tags:
-      - Streaming
-      - Real-time
       - Market Data
       - Quotes
+      - Real-Time
+      - Streaming
       - Trades
     properties:
       - type: Documentation
