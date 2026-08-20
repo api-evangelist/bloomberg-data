@@ -20,6 +20,13 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bloomberg-data.png
 tags:
   - Analytics
+  - Financial-Services
+  - Market Data
+  - News
+  - Real-Time Data
+  - Trading
+tags_raw:
+  - Analytics
   - Financial Services
   - Market Data
   - News
