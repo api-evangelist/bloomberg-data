@@ -1,0 +1,69 @@
+specification: API Commons Lifecycle
+specificationVersion: '0.1'
+provider: Bloomberg Data
+providerId: bloomberg-data
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://bloomberg.github.io/blpapi-docs/ (200),
+  https://bloomberg.github.io/blpapi-docs/all_versions.html (200),
+  https://blpapi.bloomberg.com/repository/releases/python/simple/blpapi/ (200),
+  https://status.bloomberg.com/ (DNS does not resolve)
+description: >-
+  Versioning, deprecation and operational-transparency posture for the Bloomberg Data API
+  surface, recorded from what Bloomberg publishes publicly. The SDK line is versioned and
+  archived in the open; the REST/Data License service itself publishes no public versioning
+  policy, deprecation policy, SLA or status page that an unauthenticated client can read.
+versioning:
+  scheme: semver
+  applies_to: BLPAPI SDK (C++, Java, .NET, Python)
+  current_version: 3.26.7
+  python_sdk_version: 3.26.7.1
+  evidence:
+    - url: https://bloomberg.github.io/blpapi-docs/
+      status: 200
+      detail: C++, C# (.NET), Java and Python all documented at 3.26.7.
+    - url: https://bloomberg.github.io/blpapi-docs/all_versions.html
+      status: 200
+      detail: Public archive of documentation for every prior SDK release.
+  rest_api_versioning: not-published
+  rest_api_versioning_note: >-
+    The Data License / Hypermedia REST surface is reached at https://api.bloomberg.com/eap/ with no
+    version segment in the path, and no public document states how breaking changes are versioned.
+deprecation:
+  policy_published: false
+  sunset_header: unknown
+  deprecation_header: unknown
+  note: >-
+    No public deprecation policy, no RFC 8594 Sunset/Deprecation header documentation, and no
+    deprecated-operation list — there is no public contract from which deprecations could be derived.
+  evidence:
+    - url: https://api.bloomberg.com/eap/
+      status: 401
+status_page:
+  published: false
+  url: null
+  evidence:
+    - url: https://status.bloomberg.com/
+      status: '<no response>'
+      detail: Host does not resolve. Service status for Data License is delivered through the customer-only Bloomberg Enterprise Console (console.blpprofessional.com), which requires a login.
+sla:
+  published: false
+  note: SLAs are contractual to the Data License agreement; nothing is published publicly.
+support:
+  channels:
+    - type: phone
+      value: '+1 212 318 2000'
+      region: Americas
+    - type: phone
+      value: '+44 20 7330 7500'
+      region: EMEA
+    - type: phone
+      value: '+65 6212 1000'
+      region: Asia Pacific
+    - type: web
+      value: https://www.bloomberg.com/professional/support/
+  source: https://professional.bloomberg.com/products/data/data-license/
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

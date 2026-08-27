@@ -1,0 +1,93 @@
+specification: API Commons Conventions
+specificationVersion: '0.1'
+provider: Bloomberg Data
+providerId: bloomberg-data
+generated: '2026-08-27'
+method: probed
+source: >-
+  live unauthenticated probes of https://api.bloomberg.com/eap/ and /eap/catalogs/ (401),
+  Bloomberg's published OAuth/OIDC discovery documents, and https://bloomberg.github.io/blpapi-docs/
+description: >-
+  Cross-cutting runtime semantics for the Bloomberg Data API surface. Bloomberg publishes no
+  public contract and no public developer reference for the Data License REST API, so most
+  fields below are recorded as not-published rather than guessed. Everything asserted is
+  observable without a credential.
+auth:
+  style: OAuth 2.0 client credentials exchanged for a JWT bearer token
+  header: Authorization
+  authorization_server: https://bsso.blpprofessional.com
+  protected_resource: https://api.bloomberg.com
+  cross_reference: authentication/bloomberg-data-authentication.yml
+  evidence:
+    - url: https://api.bloomberg.com/.well-known/oauth-protected-resource
+      status: 200
+idempotency:
+  supported: not-published
+  header: null
+  note: >-
+    No idempotency key header, scope or retention window is documented publicly. No Idempotency
+    pointer is emitted for this provider — the artifact records an absence, not a capability.
+pagination:
+  style: not-published
+  note: The catalogs/datasets collections are paginated in practice but the parameter names are behind the credential wall.
+error_envelope:
+  shape: JSON:API-style errors[] array with OAuth error/error_description siblings
+  observed_members:
+    - errors[].title
+    - errors[].detail
+    - errors[].status
+    - errors[].id
+    - errors[].meta.server-time
+    - error
+    - error_description
+  rfc9457: false
+  examples:
+    - url: https://api.bloomberg.com/eap/
+      status: 401
+      body: '{"errors":[{"detail":"No definition of jwt found in header or query string."}]}'
+    - url: https://api.bloomberg.com/openapi.json
+      status: 403
+      body: '{"error":"access_denied","error_description":"Access forbidden."}'
+request_id_tracing:
+  supported: true
+  field: errors[].id
+  note: >-
+    Every observed error body carries a per-request UUID in errors[].id and a server-time epoch in
+    errors[].meta — enough for a support conversation, though no header-based correlation id is documented.
+rate_limit_signaling:
+  headers: not-published
+  cross_reference: rate-limits/bloomberg-data-rate-limits.yml
+versioning:
+  in_path: false
+  note: Base path https://api.bloomberg.com/eap/ carries no version segment.
+  cross_reference: lifecycle/bloomberg-data-lifecycle.yml
+content_negotiation:
+  observed: application/json on error responses
+  note: >-
+    Data License bulk deliveries are documented as delivering standardized machine-readable files
+    (CSV/JSON/Parquet varieties by dataset); the negotiation mechanism is not public.
+transport_note: >-
+  The B-PIPE entry in this profile is not HTTP at all. It is consumed over the proprietary BLPAPI
+  TCP session protocol (default port 8194) through the BLPAPI SDK, so HTTP conventions do not apply
+  to it — only to the Data License / Hypermedia REST surface on api.bloomberg.com.
+dry_run_mode:
+  supported: not-published
+reversibility:
+  applicable: na
+  grade: na
+  rationale: >-
+    The Bloomberg Data License / Hypermedia surface is a read-only data-retrieval API — clients
+    request catalogs, datasets, fields and universes and receive data. The only client-created
+    objects are request/universe/fieldlist resources used to schedule a retrieval, and Bloomberg
+    publishes no public documentation of a cancel/delete/reverse operation or any window for one.
+    Because no write surface with real-world consequence is publicly documented, reversibility,
+    dry_run_mode and idempotency are all recorded as `na`/not-published rather than scored zero.
+  reversal_operations: []
+  windows: []
+  evidence:
+    - url: https://api.bloomberg.com/eap/catalogs/
+      status: 401
+      detail: Collection is credential-gated; no public operation reference exists to enumerate write operations from.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

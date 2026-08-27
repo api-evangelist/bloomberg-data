@@ -1,0 +1,93 @@
+specification: API Commons Authentication
+specificationVersion: '0.1'
+provider: Bloomberg Data
+providerId: bloomberg-data
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://api.bloomberg.com/.well-known/oauth-protected-resource (200),
+  https://bsso.blpprofessional.com/.well-known/oauth-authorization-server (200),
+  https://www.bloomberg.com/.well-known/openid-configuration (200),
+  and live 401 challenges from https://api.bloomberg.com/eap/ and /eap/catalogs/
+description: >-
+  Authentication profile for the Bloomberg Data API surface. Derived from Bloomberg's own
+  published OAuth/OIDC discovery documents rather than from an OpenAPI document — Bloomberg
+  publishes no public machine-readable contract for the Data License REST API, but it does
+  publish RFC 9728 protected-resource metadata and RFC 8414 authorization-server metadata,
+  which name the token endpoint, the grant types and the flows exactly.
+schemes:
+  - id: bloomberg_data_license_oauth2
+    type: oauth2
+    applies_to:
+      - Bloomberg Data License API
+    protected_resource: https://api.bloomberg.com
+    protected_resource_metadata: https://api.bloomberg.com/.well-known/oauth-protected-resource
+    authorization_server: https://bsso.blpprofessional.com
+    authorization_server_metadata: https://bsso.blpprofessional.com/.well-known/oauth-authorization-server
+    token_endpoint: https://bsso.blpprofessional.com/as/token.oauth2
+    authorization_endpoint: https://bsso.blpprofessional.com/as/authorization.oauth2
+    introspection_endpoint: https://bsso.blpprofessional.com/as/introspect.oauth2
+    revocation_endpoint: https://bsso.blpprofessional.com/as/revoke_token.oauth2
+    device_authorization_endpoint: https://bsso.blpprofessional.com/as/device_authz.oauth2
+    registration_endpoint: https://bsso.blpprofessional.com/as/clients.oauth2
+    jwks_uri: https://bsso.blpprofessional.com/ext/caching/JWKS
+    token_format: JWT bearer
+    transport: Authorization request header
+    credential_issuance: >-
+      Client credentials are issued to a contracted Data License customer from the Bloomberg
+      Enterprise Console (console.blpprofessional.com); there is no self-service signup.
+    evidence:
+      - url: https://api.bloomberg.com/eap/
+        status: 401
+        body: '{"errors":[{"detail":"No definition of jwt found in header or query string."}]}'
+      - url: https://api.bloomberg.com/eap/catalogs/
+        status: 401
+        body: '{"error":"unauthorized_client","error_description":"No definition of jwt found in header or query string."}'
+      - url: https://api.bloomberg.com/.well-known/oauth-protected-resource
+        status: 200
+  - id: bloomberg_com_oidc
+    type: openIdConnect
+    applies_to:
+      - bloomberg.com account / entitlement identity (not the Data License data plane)
+    issuer: https://www.bloomberg.com
+    openid_configuration: https://www.bloomberg.com/.well-known/openid-configuration
+    authorization_endpoint: https://login.bloomberg.com/api/oauth/authorize
+    token_endpoint: https://login.bloomberg.com/api/oauth/token
+    jwks_uri: https://login.bloomberg.com/api/oauth/.well-known/jwks.json
+    grant_types:
+      - authorization_code
+      - refresh_token
+    pkce: S256
+    id_token_signing_alg: RS256
+    evidence:
+      - url: https://www.bloomberg.com/.well-known/openid-configuration
+        status: 200
+  - id: blpapi_session_auth
+    type: proprietary
+    applies_to:
+      - Bloomberg B-PIPE API
+    note: >-
+      B-PIPE is not an HTTP API. It is consumed through the BLPAPI SDK over a TCP session
+      (default port 8194) against a customer-provisioned B-PIPE appliance or a Bloomberg
+      Server API host, with entitlement carried by the session identity (Terminal user or
+      Application Name / EID) rather than by an HTTP credential. There is therefore no
+      public HTTPS base URL and no bearer token for this entry.
+    evidence:
+      - url: https://bloomberg.github.io/blpapi-docs/
+        status: 200
+mtls: not-documented
+api_keys: false
+basic_auth: false
+gaps:
+  - >-
+    The scope-to-operation mapping is not public. bsso.blpprofessional.com publishes
+    scopes_supported for identity (firmid, openid, profile, name, employeeid, bbprofile,
+    email) but the Data License data-plane entitlements are contract-provisioned, not
+    published as OAuth scopes.
+  - >-
+    No public auth quickstart page is reachable: www.bloomberg.com/professional/support/api-library/
+    returns a bot challenge (403) to non-browser clients and data.bloomberg.com renders
+    client-side behind a login.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

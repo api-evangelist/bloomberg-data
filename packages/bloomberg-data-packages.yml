@@ -1,0 +1,128 @@
+specification: API Commons Packages
+specificationVersion: '0.1'
+provider: Bloomberg Data
+providerId: bloomberg-data
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://blpapi.bloomberg.com/repository/releases/python/simple/blpapi/ (200, PEP 503 index),
+  https://registry.npmjs.org/blpapi (200), https://bloomberg.github.io/blpapi-docs/ (200),
+  https://pypi.org/pypi/blpapi/json (404)
+description: >-
+  First-party Bloomberg client libraries for the market-data and Data License surface. The
+  headline finding is a distribution one: Bloomberg's Python SDK is NOT on PyPI (404) — it is
+  served only from Bloomberg's own PEP 503 index at blpapi.bloomberg.com, which answers
+  unauthenticated and is where the real version and release date can be read. The Node.js
+  binding, by contrast, is on npm and has not shipped since 2015.
+packages:
+  - name: blpapi
+    language: python
+    official: true
+    registry: bloomberg-pep503
+    registry_url: https://blpapi.bloomberg.com/repository/releases/python/simple/blpapi/
+    install: python -m pip install --index-url=https://blpapi.bloomberg.com/repository/releases/python/simple/ blpapi
+    version: 3.26.7.1
+    published: '2026-08-12'
+    published_source: >-
+      Last-Modified header on https://blpapi.bloomberg.com/repository/releases/python/blpapi-3.26.7.1-py3-none-macosx_11_0_arm64.whl
+      (HTTP 200). A PEP 503 simple index carries no dates, so the artifact header is the only date available.
+    note: >-
+      540 distribution files published on Bloomberg's own index; wheels bundle the C++ SDK so a separate
+      C++ install is no longer required. Actively maintained — this release is two weeks old.
+    applies_to:
+      - Bloomberg B-PIPE API
+      - Bloomberg Data License API
+  - name: BLPAPI C++ SDK
+    language: cpp
+    official: true
+    registry: vendor-download
+    registry_url: https://www.bloomberg.com/professional/support/api-library/
+    docs: https://bloomberg.github.io/blpapi-docs/cpp/3.26.7/
+    version: 3.26.7
+    published: null
+    note: >-
+      Distributed from Bloomberg's own download centre, not a public package registry, so there is no
+      metadata endpoint to query for a release date. Version read from the published Doxygen docs tree
+      at bloomberg.github.io/blpapi-docs (HTTP 200), which is versioned per release.
+    applies_to:
+      - Bloomberg B-PIPE API
+  - name: BLPAPI Java SDK
+    language: java
+    official: true
+    registry: vendor-download
+    registry_url: https://www.bloomberg.com/professional/support/api-library/
+    docs: https://bloomberg.github.io/blpapi-docs/
+    version: 3.26.7
+    published: null
+    note: >-
+      Not on Maven Central — a search.maven.org query for "blpapi" returns numFound 0. Distributed only
+      from Bloomberg's download centre, so no registry date exists to record.
+    applies_to:
+      - Bloomberg B-PIPE API
+  - name: BLPAPI .NET SDK
+    language: dotnet
+    official: true
+    registry: vendor-download
+    registry_url: https://www.bloomberg.com/professional/support/api-library/
+    docs: https://bloomberg.github.io/blpapi-docs/
+    version: 3.26.7
+    published: null
+    note: >-
+      Not on NuGet — api.nuget.org returns BlobNotFound for bloomberglp.blpapi. Vendor download only,
+      so no registry date exists to record.
+    applies_to:
+      - Bloomberg B-PIPE API
+  - name: blpapi
+    language: javascript
+    official: true
+    registry: npm
+    registry_url: https://registry.npmjs.org/blpapi
+    install: npm install blpapi
+    repository: https://github.com/bloomberg/blpapi-node
+    version: 1.2.0
+    published: '2015-03-19'
+    note: >-
+      First-party (published by Bloomberg's npm maintainer, repo under github.com/bloomberg). ABANDONMENT
+      SIGNAL: the last release predates the current C++/Python SDK line (3.26.x) by eleven years, so the
+      Node.js binding is effectively unmaintained relative to the API it wraps.
+    applies_to:
+      - Bloomberg B-PIPE API
+  - name: blpapi-http
+    language: javascript
+    official: true
+    registry: none
+    repository: https://github.com/bloomberg/blpapi-http
+    version: null
+    published: null
+    note: >-
+      Bloomberg-published HTTP wrapper for the Open API, source-only on GitHub with no package-registry
+      release, so there is no version or date to read. Recorded because it is the only first-party
+      HTTP projection of BLPAPI that Bloomberg publishes at all.
+    applies_to:
+      - Bloomberg B-PIPE API
+absent_registries:
+  - registry: pypi
+    package: blpapi
+    status: 404
+    url: https://pypi.org/pypi/blpapi/json
+    note: Bloomberg deliberately does not publish blpapi to PyPI.
+  - registry: maven-central
+    query: blpapi
+    status: 200
+    result: numFound 0
+  - registry: nuget
+    package: bloomberglp.blpapi
+    status: 404
+  - registry: rubygems
+    package: blpapi
+    status: 404
+  - registry: crates.io
+    package: blpapi
+    status: 403
+    note: crates.io refused the unauthenticated probe; no first-party Rust crate is expected.
+third_party_note: >-
+  Widely used community packages (msitt/blpapi-python, xbbg, pdblp, blp, conda-forge/blpapi-feedstock,
+  tafia/blpapi-rs) exist but are NOT first-party and are deliberately excluded from packages[].
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

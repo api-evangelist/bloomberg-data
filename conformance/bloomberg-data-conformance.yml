@@ -1,0 +1,163 @@
+specification: API Commons Conformance
+specificationVersion: '0.1'
+provider: Bloomberg Data
+providerId: bloomberg-data
+generated: '2026-08-27'
+method: probed
+source: live unauthenticated probes of Bloomberg's published discovery documents (see evidence per entry)
+description: >-
+  Cross-cutting standards conformance for the Bloomberg Data API surface, asserted only where
+  Bloomberg's own published documents demonstrate it. Bloomberg publishes no public OpenAPI,
+  so every positive entry here is evidenced by a discovery document, not by a contract.
+conformance:
+  - id: oauth2
+    name: OAuth 2.0 (RFC 6749)
+    conforms: true
+    evidence:
+      url: https://bsso.blpprofessional.com/.well-known/oauth-authorization-server
+      status: 200
+      detail: Authorization, token, revocation and introspection endpoints published; 11 grant types advertised.
+  - id: oauth2_authorization_server_metadata
+    name: OAuth 2.0 Authorization Server Metadata (RFC 8414)
+    conforms: true
+    evidence:
+      url: https://bsso.blpprofessional.com/.well-known/oauth-authorization-server
+      status: 200
+  - id: oauth2_protected_resource_metadata
+    name: OAuth 2.0 Protected Resource Metadata (RFC 9728)
+    conforms: true
+    evidence:
+      url: https://api.bloomberg.com/.well-known/oauth-protected-resource
+      status: 200
+      detail: 'Declares resource https://api.bloomberg.com and authorization_servers [https://bsso.blpprofessional.com].'
+  - id: oidc
+    name: OpenID Connect Discovery 1.0
+    conforms: true
+    evidence:
+      url: https://www.bloomberg.com/.well-known/openid-configuration
+      status: 200
+      detail: A second OIDC discovery document is served at https://bsso.blpprofessional.com/.well-known/openid-configuration (200).
+  - id: oauth2_dynamic_client_registration
+    name: OAuth 2.0 Dynamic Client Registration (RFC 7591)
+    conforms: true
+    evidence:
+      url: https://bsso.blpprofessional.com/.well-known/oauth-authorization-server
+      status: 200
+      detail: 'registration_endpoint: https://bsso.blpprofessional.com/as/clients.oauth2'
+  - id: oauth2_pkce
+    name: PKCE (RFC 7636)
+    conforms: true
+    evidence:
+      url: https://bsso.blpprofessional.com/.well-known/oauth-authorization-server
+      status: 200
+      detail: 'code_challenge_methods_supported: [plain, S256]. www.bloomberg.com advertises S256 only.'
+  - id: oauth2_pushed_authorization_requests
+    name: Pushed Authorization Requests (RFC 9126)
+    conforms: true
+    evidence:
+      url: https://bsso.blpprofessional.com/.well-known/oauth-authorization-server
+      status: 200
+      detail: pushed_authorization_request_endpoint published; require_pushed_authorization_requests present.
+  - id: oauth2_mtls_client_auth
+    name: OAuth 2.0 Mutual-TLS Client Authentication (RFC 8705)
+    conforms: true
+    evidence:
+      url: https://bsso.blpprofessional.com/.well-known/oauth-authorization-server
+      status: 200
+      detail: 'token_endpoint_auth_methods_supported includes tls_client_auth and private_key_jwt.'
+  - id: oauth2_token_exchange
+    name: OAuth 2.0 Token Exchange (RFC 8693)
+    conforms: true
+    evidence:
+      url: https://bsso.blpprofessional.com/.well-known/oauth-authorization-server
+      status: 200
+      detail: 'grant_types_supported includes urn:ietf:params:oauth:grant-type:token-exchange.'
+  - id: ciba
+    name: OpenID Connect CIBA (Client Initiated Backchannel Authentication)
+    conforms: true
+    evidence:
+      url: https://bsso.blpprofessional.com/.well-known/oauth-authorization-server
+      status: 200
+      detail: backchannel_authentication_endpoint and backchannel_token_delivery_modes_supported published.
+  - id: jwt
+    name: JSON Web Token (RFC 7519)
+    conforms: true
+    evidence:
+      url: https://api.bloomberg.com/eap/
+      status: 401
+      detail: 'Unauthenticated call returns "No definition of jwt found in header or query string."'
+  - id: security_txt
+    name: security.txt (RFC 9116)
+    conforms: true
+    evidence:
+      url: https://www.bloomberg.com/.well-known/security.txt
+      status: 200
+  - id: openapi
+    name: OpenAPI Specification
+    conforms: false
+    evidence:
+      url: https://api.bloomberg.com/openapi.json
+      status: 403
+      detail: >-
+        No public OpenAPI is served on any Bloomberg host. /openapi.json and /swagger.json on
+        api.bloomberg.com return 403 access_denied, /eap/openapi.json returns 401 (JWT required),
+        and data.bloomberg.com and developer.bloomberg.com return SPA shells. Bloomberg has been an
+        OpenAPI Initiative member since April 2020, but publishes no public contract for this surface.
+  - id: rfc9457
+    name: Problem Details for HTTP APIs (RFC 9457)
+    conforms: false
+    evidence:
+      url: https://api.bloomberg.com/eap/catalogs/
+      status: 401
+      detail: >-
+        Errors use a JSON:API-flavored envelope ({"errors":[{"title","detail","status","id","meta"}]})
+        with OAuth-style error/error_description siblings, not application/problem+json.
+  - id: json_api
+    name: JSON:API
+    conforms: partial
+    evidence:
+      url: https://api.bloomberg.com/eap/catalogs/
+      status: 401
+      detail: >-
+        The error envelope observed on the 401 uses the JSON:API errors[] shape with title/detail/
+        status/id/meta members. Whether the success payloads are JSON:API cannot be observed without
+        a credential, so this is recorded as partial rather than asserted.
+  - id: asyncapi
+    name: AsyncAPI
+    conforms: false
+    evidence:
+      url: https://bloomberg.github.io/blpapi-docs/
+      status: 200
+      detail: >-
+        B-PIPE is a genuine subscription/streaming surface, but it runs over the proprietary BLPAPI
+        TCP protocol and Bloomberg publishes no AsyncAPI document for it. Not penalised — the
+        surface exists, the machine-readable description does not.
+domain_standards:
+  - id: fix
+    name: FIX Protocol
+    conforms: false
+    detail: >-
+      Not declared anywhere in a Bloomberg-published contract for this surface. Bloomberg's FIX
+      surface belongs to its order-routing products (EMSX/TOMS), not to Data License; asserting it
+      here from market knowledge rather than from a contract would be a fabrication.
+  - id: iso20022
+    name: ISO 20022
+    conforms: false
+    detail: No ISO 20022 message type is declared in any published Bloomberg Data License artifact.
+  - id: figi
+    name: OpenFIGI / Financial Instrument Global Identifier (ISO 6166-adjacent, OMG standard)
+    conforms: unknown
+    detail: >-
+      FIGI is an open identifier standard Bloomberg itself originated and maintains via the Object
+      Management Group, and Data License content is FIGI-identified in practice — but the Data
+      License contract that would DECLARE the identifier scheme is not public, so this cannot be
+      evidenced from a spec location and is recorded as unknown rather than claimed.
+    reference: https://www.openfigi.com/
+notes:
+  - >-
+    Reward-only rule observed: no domain standard is claimed without a spec location, and the
+    securities/market-data regime's standards are recorded as absent-from-contract rather than
+    inferred from the product.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

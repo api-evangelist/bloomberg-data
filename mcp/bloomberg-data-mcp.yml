@@ -1,0 +1,44 @@
+specification: API Commons MCP
+specificationVersion: '0.1'
+provider: Bloomberg Data
+providerId: bloomberg-data
+generated: '2026-08-27'
+method: searched
+source: >-
+  https://api.bloomberg.com/.well-known/oauth-protected-resource (200),
+  https://api.bloomberg.com/eap/ (401), GitHub repository search for "blpapi" (200),
+  https://developer.bloomberg.com/ (SPA shell)
+status: none
+description: >-
+  Bloomberg publishes no Model Context Protocol server for the Data License / B-PIPE surface.
+  No /mcp endpoint, no npx-installable package, and no mention of MCP on any reachable Bloomberg
+  host. A community server exists (github.com/djsamseng/blpapi-mcp, which wraps the customer's own
+  local BLPAPI session) but it is third-party and is not recorded as a Bloomberg agent surface.
+  No candidate tool list is derived either: Bloomberg publishes no OpenAPI to derive one from, and
+  inventing tool names for a credential-gated API would be a fabrication.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: probed
+tools: []
+evidence:
+  - url: https://api.bloomberg.com/eap/
+    status: 401
+    detail: Data plane requires a JWT; no MCP transport advertised.
+  - url: https://api.bloomberg.com/.well-known/oauth-protected-resource
+    status: 200
+    detail: Declares an OAuth-protected REST resource, not an MCP resource server.
+  - url: https://developer.bloomberg.com/
+    status: 200
+    detail: Client-rendered SPA; every path returns the same 18KB shell, so no MCP page could be confirmed.
+third_party:
+  - name: blpapi-mcp
+    url: https://github.com/djsamseng/blpapi-mcp
+    official: false
+    note: Community MCP server over a locally installed BLPAPI session. Not published or endorsed by Bloomberg.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

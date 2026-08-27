@@ -1,0 +1,128 @@
+specification: API Commons Well-Known
+specificationVersion: '0.1'
+provider: Bloomberg Data
+providerId: bloomberg-data
+generated: '2026-08-27'
+method: probed
+source: live unauthenticated GET of /.well-known/* on every host named in apis.yml plus the Data License API host (api.bloomberg.com) and its declared authorization server (bsso.blpprofessional.com)
+description: >-
+  Well-known discovery documents served by Bloomberg hosts. Four real documents were
+  returned: an RFC 9116 security.txt on www.bloomberg.com, an OpenID Connect discovery
+  document and an RFC 8414 authorization-server metadata document on www.bloomberg.com,
+  an RFC 9728 OAuth protected-resource metadata document on api.bloomberg.com (the Data
+  License / Hypermedia API host), and the full PingFederate authorization-server metadata
+  for bsso.blpprofessional.com, which api.bloomberg.com names as its authorization server.
+  developer.bloomberg.com is a client-rendered single-page app that answers HTTP 200 with
+  the same 18KB HTML shell for every /.well-known/* path; those are recorded as shell
+  responses, not documents, and earn no credit.
+hosts:
+  - host: www.bloomberg.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: well-known/bloomberg-data-security.txt
+        content_type: text/plain
+        note: RFC 9116. Contact mailto:reportvuln@bloomberg.net, Policy https://www.bloomberg.com/responsible-disclosure, Expires 2027-07-01.
+      - path: /.well-known/openid-configuration
+        status: 200
+        file: well-known/bloomberg-data-www-openid-configuration.json
+        content_type: application/json
+        note: bloomberg.com consumer/subscriber identity. issuer https://www.bloomberg.com, authorization + token endpoints on login.bloomberg.com, PKCE S256, scopes openid/user/entitlements.
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: well-known/bloomberg-data-www-oauth-authorization-server.json
+        content_type: application/json
+        note: RFC 8414 metadata for the same issuer.
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+  - host: api.bloomberg.com
+    documents:
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        file: well-known/bloomberg-data-api-oauth-protected-resource.json
+        content_type: application/json
+        note: >-
+          RFC 9728. Declares resource https://api.bloomberg.com and authorization_servers
+          [https://bsso.blpprofessional.com]. This is the machine-readable proof that the
+          Data License / Hypermedia (HAPI) API host is an OAuth 2.0 protected resource.
+      - path: /.well-known/security.txt
+        status: 403
+        file: null
+        note: The API edge answers 403 access_denied to every unauthenticated path except oauth-protected-resource.
+      - path: /.well-known/api-catalog
+        status: 403
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 403
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 403
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 403
+        file: null
+      - path: /.well-known/agent.json
+        status: 403
+        file: null
+  - host: bsso.blpprofessional.com
+    documents:
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: well-known/bloomberg-data-bsso-oauth-authorization-server.json
+        content_type: application/json
+        note: >-
+          PingFederate. Token, authorization, revocation, introspection, userinfo, device
+          authorization and dynamic client registration endpoints all published. This is the
+          authorization server api.bloomberg.com points at, so it is the real auth surface for
+          the Data License REST API.
+      - path: /.well-known/openid-configuration
+        status: 200
+        file: well-known/bloomberg-data-bsso-openid-configuration.json
+        content_type: application/json
+        note: Byte-identical to the RFC 8414 document above.
+  - host: developer.bloomberg.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: null
+        note: SPA shell (18,505 bytes of HTML) — not a document. Recorded as a miss.
+      - path: /.well-known/api-catalog
+        status: 200
+        file: null
+        note: SPA shell — not a document.
+      - path: /.well-known/openid-configuration
+        status: 200
+        file: null
+        note: SPA shell — not a document.
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: null
+        note: SPA shell — not a document.
+      - path: /.well-known/ai-plugin.json
+        status: 200
+        file: null
+        note: SPA shell — not a document.
+      - path: /.well-known/agent-card.json
+        status: 200
+        file: null
+        note: SPA shell — not a document. Rejected as an A2A agent card false positive.
+      - path: /.well-known/agent.json
+        status: 200
+        file: null
+        note: SPA shell — not a document.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
