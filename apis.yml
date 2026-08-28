@@ -8,6 +8,17 @@ description: 'Bloomberg''s enterprise market-data API surface. The Data License 
   Both are contracted enterprise products: there is no self-service signup, no published pricing, and no public
   machine-readable contract, though Bloomberg does publish OAuth protected-resource and authorization-server metadata.'
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: sales
