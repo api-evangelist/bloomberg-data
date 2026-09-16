@@ -1,12 +1,13 @@
 aid: bloomberg-data
 name: Bloomberg Data
-description: 'Bloomberg''s enterprise market-data API surface. The Data License / Hypermedia (HAPI) REST API on
-  api.bloomberg.com delivers reference, pricing, regulatory, ESG, fundamentals, estimates and historical content
-  — 100B+ data points a day across 70M+ instruments, 40k+ fields and 8k+ datasets — request/response and by subscription,
-  alongside SFTP and native cloud delivery. B-PIPE delivers real-time streaming quotes, trades and market depth,
-  consumed not over HTTP but through the BLPAPI SDK over a TCP session against a customer-provisioned appliance.
-  Both are contracted enterprise products: there is no self-service signup, no published pricing, and no public
-  machine-readable contract, though Bloomberg does publish OAuth protected-resource and authorization-server metadata.'
+description: 'Bloomberg''s enterprise market-data API surface. The Data License / Hypermedia (HAPI) REST
+  API on api.bloomberg.com delivers reference, pricing, regulatory, ESG, fundamentals, estimates and historical
+  content — 100B+ data points a day across 70M+ instruments, 40k+ fields and 8k+ datasets — request/response
+  and by subscription, alongside SFTP and native cloud delivery. B-PIPE delivers real-time streaming quotes,
+  trades and market depth, consumed not over HTTP but through the BLPAPI SDK over a TCP session against
+  a customer-provisioned appliance. Both are contracted enterprise products: there is no self-service
+  signup, no published pricing, and no public machine-readable contract, though Bloomberg does publish
+  OAuth protected-resource and authorization-server metadata.'
 type: Index
 deliveryModel:
   model: saas
@@ -32,9 +33,9 @@ accessModel:
   - https://professional.bloomberg.com/products/data/data-license/
   generated: '2026-08-27'
   method: searched
-  note: Corrected 2026-08-27. The prior 'freemium' value was derived from a 2026-05-04 bulk-sweep plans scaffold
-    that invented Free/Professional/Enterprise tiers. Bloomberg publishes no plans and no prices for this surface;
-    access begins with a sales conversation.
+  note: Corrected 2026-08-27. The prior 'freemium' value was derived from a 2026-05-04 bulk-sweep plans
+    scaffold that invented Free/Professional/Enterprise tiers. Bloomberg publishes no plans and no prices
+    for this surface; access begins with a sales conversation.
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bloomberg-data.png
 tags:
 - Analytics
@@ -52,13 +53,13 @@ tags_raw:
 - Trading
 url: https://raw.githubusercontent.com/api-evangelist/bloomberg-data/refs/heads/main/apis.yml
 created: '2024-01-01'
-modified: '2026-08-27'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 apis:
 - aid: bloomberg-data:bloomberg-data-license-api
   name: Bloomberg Data License API
-  description: Provides access to Bloomberg's extensive financial data including real-time quotes, historical data,
-    reference data, and analytics.
+  description: Provides access to Bloomberg's extensive financial data including real-time quotes, historical
+    data, reference data, and analytics.
   humanURL: https://www.bloomberg.com/professional/support/api-library/
   baseURL: https://api.bloomberg.com/eap
   tags:
@@ -84,6 +85,8 @@ apis:
   - type: Documentation
     url: https://www.bloomberg.com/professional/products/data/enterprise-catalog/real-time-data-feed/
 common:
+- type: Website
+  url: https://bloomberg.com
 - type: ParentCompany
   url: https://apis.io/providers/bloomberg/
   name: Bloomberg
