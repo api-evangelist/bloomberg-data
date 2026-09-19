@@ -80,6 +80,12 @@ apis:
   - Quotes
   - Real-Time
   - Streaming
+  - Trade
+  tags_raw:
+  - Market Data
+  - Quotes
+  - Real-Time
+  - Streaming
   - Trades
   properties:
   - type: Documentation
