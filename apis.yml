@@ -37,6 +37,9 @@ accessModel:
     scaffold that invented Free/Professional/Enterprise tiers. Bloomberg publishes no plans and no prices
     for this surface; access begins with a sales conversation.
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/bloomberg-data.png
+x-docs-platform: redoc
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-20
 tags:
 - Analytics
 - Financial-Services
