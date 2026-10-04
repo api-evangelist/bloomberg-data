@@ -42,7 +42,7 @@ x-docs-platform-confidence: medium
 x-docs-platform-checked: 2026-09-20
 tags:
 - Analytics
-- Financial-Services
+- Financial Services
 - Market Data
 - News
 - Real-Time Data
@@ -54,6 +54,7 @@ tags_raw:
 - News
 - Real-Time Data
 - Trading
+- Financial-Services
 url: https://raw.githubusercontent.com/api-evangelist/bloomberg-data/refs/heads/main/apis.yml
 created: '2024-01-01'
 modified: '2026-09-16'
